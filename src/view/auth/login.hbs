@@ -1,0 +1,39 @@
+<section class="auth-card">
+  <h1>Đăng nhập</h1>
+  <p class="muted">Đăng nhập để tiếp tục mua hàng.</p>
+
+  {{#if error}}
+    <div class="alert alert-danger">{{error}}</div>
+  {{/if}}
+
+  <form class="form-stack" action="/login" method="POST">
+    <label>
+      Email
+      <input
+        type="email"
+        name="email"
+        value="{{email}}"
+        maxlength="150"
+        required
+      >
+    </label>
+
+    <label>
+      Mật khẩu
+      <input
+        type="password"
+        name="password"
+        required
+      >
+    </label>
+
+    <button class="btn btn-primary btn-block" type="submit">
+      Đăng nhập
+    </button>
+  </form>
+
+  <p class="form-note">
+    Chưa có tài khoản?
+    <a href="/register">Đăng ký ngay</a>
+  </p>
+</section>

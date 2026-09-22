@@ -1,0 +1,52 @@
+<section class="page-section">
+  <div class="page-header">
+    <div>
+      <h1>Laptop Store</h1>
+      <p>Danh sách laptop hiện có tại cửa hàng.</p>
+    </div>
+  </div>
+
+  {{#if products.length}}
+    <div class="product-grid">
+      {{#each products}}
+        <article class="product-card">
+          <a class="product-image-box" href="/products/{{id}}">
+            {{#if image}}
+              <img class="product-image" src="{{image}}" alt="{{name}}">
+            {{else}}
+              <span class="image-placeholder">Chưa có ảnh</span>
+            {{/if}}
+          </a>
+
+          <div class="product-card-body">
+            <span class="product-brand">{{brand}}</span>
+            <h3>
+              <a href="/products/{{id}}">{{name}}</a>
+            </h3>
+
+            <div class="product-meta">
+              <p class="price">{{formatCurrency price}}</p>
+            </div>
+
+            <div class="card-actions">
+              <a class="btn btn-outline btn-small" href="/products/{{id}}">
+                Chi tiết
+              </a>
+
+              <form action="/cart/add/{{id}}" method="POST">
+                <button class="btn btn-primary btn-small" type="submit">
+                  Thêm giỏ
+                </button>
+              </form>
+            </div>
+          </div>
+        </article>
+      {{/each}}
+    </div>
+  {{else}}
+    <div class="empty-box">
+      <h2>Chưa có sản phẩm</h2>
+      <p>Quản trị viên có thể thêm sản phẩm trong trang quản trị.</p>
+    </div>
+  {{/if}}
+</section>

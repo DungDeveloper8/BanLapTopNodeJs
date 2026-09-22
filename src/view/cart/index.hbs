@@ -1,0 +1,95 @@
+<section class="page-section">
+  <div class="page-header">
+    <div>
+      <h1>Giỏ hàng</h1>
+      <p>Kiểm tra sản phẩm trước khi thanh toán.</p>
+    </div>
+  </div>
+
+  {{#if items.length}}
+    <div class="cart-layout">
+      <div class="table-card table-scroll">
+        <table>
+          <thead>
+            <tr>
+              <th>Sản phẩm</th>
+              <th>Đơn giá</th>
+              <th>Số lượng</th>
+              <th>Tạm tính</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            {{#each items}}
+              <tr>
+                <td>
+                  <div class="product-cell">
+                    {{#if image}}
+                      <img src="{{image}}" alt="{{name}}">
+                    {{else}}
+                      <span class="image-placeholder image-placeholder-small">Chưa có ảnh</span>
+                    {{/if}}
+
+                    <div>
+                      <strong>{{name}}</strong>
+                      <span>{{brand}}</span>
+                    </div>
+                  </div>
+                </td>
+                <td>{{formatCurrency price}}</td>
+                <td>
+                  <form class="quantity-form" action="/cart/update/{{id}}" method="POST">
+                    <input
+                      type="number"
+                      name="quantity"
+                      value="{{quantity}}"
+                      min="1"
+                      required
+                    >
+                    <button class="btn btn-outline btn-small" type="submit">
+                      Cập nhật
+                    </button>
+                  </form>
+                </td>
+                <td>{{formatCurrency subtotal}}</td>
+                <td>
+                  <form
+                    action="/cart/remove/{{id}}"
+                    method="POST"
+                    data-confirm="Xóa sản phẩm này khỏi giỏ hàng?"
+                  >
+                    <button class="btn btn-danger btn-small" type="submit">
+                      Xóa
+                    </button>
+                  </form>
+                </td>
+              </tr>
+            {{/each}}
+          </tbody>
+        </table>
+      </div>
+
+      <aside class="summary-card">
+        <h2>Tóm tắt đơn hàng</h2>
+
+        <div class="summary-row summary-total">
+          <span>Tổng cộng</span>
+          <strong>{{formatCurrency total}}</strong>
+        </div>
+
+        <a class="btn btn-primary btn-block" href="/orders/create">
+          Tiến hành thanh toán
+        </a>
+        <a class="btn btn-outline btn-block" href="/">
+          Tiếp tục mua hàng
+        </a>
+      </aside>
+    </div>
+  {{else}}
+    <div class="empty-box">
+      <h2>Giỏ hàng đang trống</h2>
+      <p>Hãy chọn một sản phẩm phù hợp trước khi thanh toán.</p>
+      <a class="btn btn-primary" href="/">Xem sản phẩm</a>
+    </div>
+  {{/if}}
+</section>

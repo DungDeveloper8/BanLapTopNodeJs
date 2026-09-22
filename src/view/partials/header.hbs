@@ -1,0 +1,27 @@
+<header class="site-header">
+  <div class="container navbar">
+    <a class="brand" href="/">
+      <img class="brand-logo" src="/images/logo.jpg" alt="Laptop Store">
+      <span>Laptop Store</span>
+    </a>
+
+    <button class="nav-toggle" type="button" aria-label="Mở menu" aria-expanded="false" data-nav-toggle>Menu</button>
+
+    <nav class="nav-links" data-nav-menu>
+      <a href="/">Trang chủ</a>
+      <a href="/cart">Giỏ hàng · {{cartCount}}</a>
+
+      {{#if currentUser}}
+        {{#if currentUser.is_admin}}
+          <a href="/admin">Quản trị</a>
+        {{/if}}
+        <form class="inline-form" action="/logout" method="POST">
+          <button class="link-button" type="submit">Đăng xuất</button>
+        </form>
+      {{else}}
+        <a href="/login">Đăng nhập</a>
+        <a class="btn btn-primary btn-small" href="/register">Đăng ký</a>
+      {{/if}}
+    </nav>
+  </div>
+</header>

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{title}} | Quản trị</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body class="admin-body">
+  <header class="admin-header">
+    <a class="brand" href="/admin">Laptop Store Admin</a>
+    <a class="btn btn-light btn-small" href="/">Xem cửa hàng</a>
+  </header>
+
+  <div class="admin-layout">
+    {{> adminMenu}}
+
+    <main class="admin-content">
+      {{> flash}}
+      {{{body}}}
+    </main>
+  </div>
+
+  <script src="/js/navigation.js"></script>
+  <script src="/js/confirmForm.js"></script>
+</body>
+</html>

@@ -1,0 +1,75 @@
+<section class="page-section">
+  <div class="page-header">
+    <div>
+      <h1>Thanh toán</h1>
+      <p>Nhập thông tin nhận hàng và xác nhận đơn.</p>
+    </div>
+  </div>
+
+  {{#if error}}
+    <div class="alert alert-danger">{{error}}</div>
+  {{/if}}
+
+  <div class="order-layout">
+    <div class="form-card">
+      <form class="form-stack" action="/orders/create" method="POST">
+        <label>
+          Họ tên người nhận
+          <input
+            type="text"
+            name="customer_name"
+            value="{{form.customer_name}}"
+            maxlength="100"
+            required
+          >
+        </label>
+
+        <label>
+          Số điện thoại
+          <input
+            type="tel"
+            name="phone"
+            value="{{form.phone}}"
+            maxlength="20"
+            required
+          >
+        </label>
+
+        <label>
+          Địa chỉ nhận hàng
+          <textarea
+            name="address"
+            rows="4"
+            maxlength="255"
+            required
+          >{{form.address}}</textarea>
+        </label>
+
+        <div class="payment-box">
+          <strong>Phương thức thanh toán</strong>
+          <p>Thanh toán khi nhận hàng (COD).</p>
+        </div>
+
+        <button class="btn btn-primary" type="submit">
+          Xác nhận đặt hàng
+        </button>
+      </form>
+    </div>
+
+    <aside class="summary-card">
+      <h2>Đơn hàng</h2>
+
+      {{#each items}}
+        <div class="order-item">
+          <span>{{name}} × {{quantity}}</span>
+          <strong>{{formatCurrency subtotal}}</strong>
+        </div>
+      {{/each}}
+
+      <div class="summary-row summary-total">
+        <span>Tổng cộng</span>
+        <strong>{{formatCurrency total}}</strong>
+      </div>
+    </aside>
+  </div>
+</section>

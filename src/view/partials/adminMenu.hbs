@@ -1,0 +1,14 @@
+<aside class="admin-sidebar">
+  <nav class="admin-nav">
+    <a href="/admin/products">Sản phẩm</a>
+  </nav>
+
+  <div class="admin-account">
+    <strong>{{currentUser.username}}</strong>
+    <span>{{currentUser.email}}</span>
+
+    <form action="/logout" method="POST">
+      <button class="btn btn-outline btn-block" type="submit">Đăng xuất</button>
+    </form>
+  </div>
+</aside>

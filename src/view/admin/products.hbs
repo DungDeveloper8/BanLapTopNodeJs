@@ -1,0 +1,69 @@
+<section class="admin-page">
+  <div class="admin-title">
+    <div>
+      <h1>Quản lý sản phẩm</h1>
+      <p>Thêm, sửa và xóa laptop trong hệ thống.</p>
+    </div>
+
+    <a class="btn btn-primary" href="/admin/products/create">
+      + Thêm sản phẩm
+    </a>
+  </div>
+
+  <div class="table-card table-scroll">
+    <table>
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Sản phẩm</th>
+          <th>Hãng</th>
+          <th>Giá</th>
+          <th>Thao tác</th>
+        </tr>
+      </thead>
+      <tbody>
+        {{#each products}}
+          <tr>
+            <td>#{{id}}</td>
+            <td>
+              <div class="product-cell">
+                {{#if image}}
+                  <img src="{{image}}" alt="{{name}}">
+                {{else}}
+                  <span class="image-placeholder image-placeholder-small">Chưa có ảnh</span>
+                {{/if}}
+                <strong>{{name}}</strong>
+              </div>
+            </td>
+            <td>{{brand}}</td>
+            <td>{{formatCurrency price}}</td>
+            <td>
+              <div class="action-group">
+                <a
+                  class="btn btn-outline btn-small"
+                  href="/admin/products/{{id}}/edit"
+                >
+                  Sửa
+                </a>
+
+                <form
+                  action="/admin/products/{{id}}/delete"
+                  method="POST"
+                  data-confirm="Xóa sản phẩm này?"
+                >
+                  <button class="btn btn-danger btn-small" type="submit">
+                    Xóa
+                  </button>
+                </form>
+              </div>
+            </td>
+          </tr>
+        {{else}}
+          <tr>
+            <td class="table-empty" colspan="5">Chưa có sản phẩm.</td>
+          </tr>
+        {{/each}}
+      </tbody>
+    </table>
+  </div>
+</section>

@@ -1,0 +1,44 @@
+<section class="admin-page">
+  <div class="admin-title">
+    <div>
+      <h1>Sửa sản phẩm</h1>
+      <p>Cập nhật thông tin laptop #{{product.id}}.</p>
+    </div>
+    <a class="btn btn-outline" href="/admin/products">Quay lại</a>
+  </div>
+
+  <div class="form-card admin-form-card">
+    {{#if error}}<div class="alert alert-danger">{{error}}</div>{{/if}}
+
+    <form class="form-stack" action="/admin/products/{{product.id}}/edit" method="POST">
+      <div class="form-grid">
+        <label>
+          Tên laptop
+          <input type="text" name="name" value="{{product.name}}" maxlength="255" required>
+        </label>
+
+        <label>
+          Hãng
+          <input type="text" name="brand" value="{{product.brand}}" maxlength="100" required>
+        </label>
+
+        <label>
+          Giá
+          <input type="number" name="price" value="{{product.price}}" min="0" step="1000" required>
+        </label>
+      </div>
+
+      <label>
+        Đường dẫn ảnh
+        <input type="text" name="image" value="{{product.image}}" maxlength="255">
+      </label>
+
+      <label>
+        Mô tả
+        <textarea name="description" rows="6">{{product.description}}</textarea>
+      </label>
+
+      <button class="btn btn-primary" type="submit">Cập nhật sản phẩm</button>
+    </form>
+  </div>
+</section>

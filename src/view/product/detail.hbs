@@ -1,0 +1,34 @@
+<section class="product-detail">
+  <div class="detail-image-box">
+    {{#if product.image}}
+      <img src="{{product.image}}" alt="{{product.name}}" />
+    {{else}}
+      <span class="image-placeholder image-placeholder-large">Chưa có ảnh</span>
+    {{/if}}
+  </div>
+
+  <div class="detail-info">
+    <a class="back-link" href="/">← Quay lại trang chủ</a>
+
+    <p class="product-brand">{{product.brand}}</p>
+    <h1>{{product.name}}</h1>
+    <p class="price price-large">{{formatCurrency product.price}}</p>
+
+    <div class="description-box">
+      <h2>Mô tả sản phẩm</h2>
+      <p>
+        {{#if product.description}}
+          {{product.description}}
+        {{else}}
+          Chưa có mô tả cho sản phẩm này.
+        {{/if}}
+      </p>
+    </div>
+
+    <form action="/cart/add/{{product.id}}" method="POST">
+      <button class="btn btn-primary btn-large" type="submit">
+        Thêm vào giỏ hàng
+      </button>
+    </form>
+  </div>
+</section>
