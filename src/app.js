@@ -25,8 +25,8 @@ app.use(errorHandler);
 
 connectDatabase()
   .then(() => {
-    app.listen(port, () => {
-      console.log(`Server đang chạy: http://localhost:${port}`);
+    app.listen(port, "0.0.0.0", () => {
+      console.log(`Server đang chạy tại cổng ${port}`);
     });
   })
   .catch((error) => {
