@@ -20,7 +20,6 @@ async function show(req, res, next) {
         type: "warning",
         message: "Không tìm thấy sản phẩm.",
       };
-
       return res.redirect("/admin/products");
     }
 

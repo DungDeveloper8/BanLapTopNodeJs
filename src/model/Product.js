@@ -2,11 +2,7 @@ const { database } = require("../config/database");
 
 class Product {
   static async findAll() {
-    return database
-      .collection("products")
-      .find()
-      .sort({ id: -1 })
-      .toArray();
+    return database.collection("products").find().sort({ id: -1 }).toArray();
   }
 
   static async findById(id) {

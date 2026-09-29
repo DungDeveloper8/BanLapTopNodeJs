@@ -9,7 +9,6 @@ async function remove(req, res, next) {
         type: "warning",
         message: "Sản phẩm không hợp lệ.",
       };
-
       return res.redirect("/admin/products");
     }
 
@@ -20,7 +19,6 @@ async function remove(req, res, next) {
         type: "warning",
         message: "Không tìm thấy sản phẩm.",
       };
-
       return res.redirect("/admin/products");
     }
 
