@@ -1,6 +1,8 @@
 <aside class="admin-sidebar">
   <nav class="admin-nav">
     <a href="/admin/products">Sản phẩm</a>
+    <a href="/admin/orders">Đơn hàng</a>
+    <a href="/admin/stats">Thống kê</a>
   </nav>
 
   <div class="admin-account">
@@ -8,6 +10,7 @@
     <span>{{currentUser.email}}</span>
 
     <form action="/logout" method="POST">
+    <input type="hidden" name="_csrf" value="{{csrfToken}}">
       <button class="btn btn-outline btn-block" type="submit">Đăng xuất</button>
     </form>
   </div>

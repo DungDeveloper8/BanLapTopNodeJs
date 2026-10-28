@@ -1,8 +1,8 @@
 <header class="site-header">
   <div class="container navbar">
     <a class="brand" href="/">
-      <img class="brand-logo" src="/images/logo.jpg" alt="Laptop Store">
-      <span>Laptop Store</span>
+      <img class="brand-logo" src="/images/logo.jpg" alt="BK Mobile">
+      <span>BK Mobile</span>
     </a>
 
     <button class="nav-toggle" type="button" aria-label="Mở menu" aria-expanded="false" data-nav-toggle>Menu</button>
@@ -12,10 +12,12 @@
       <a href="/cart">Giỏ hàng · {{cartCount}}</a>
 
       {{#if currentUser}}
+        <a href="/orders/history">Đơn hàng của tôi</a>
         {{#if currentUser.is_admin}}
           <a href="/admin">Quản trị</a>
         {{/if}}
         <form class="inline-form" action="/logout" method="POST">
+    <input type="hidden" name="_csrf" value="{{csrfToken}}">
           <button class="link-button" type="submit">Đăng xuất</button>
         </form>
       {{else}}

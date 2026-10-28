@@ -1,0 +1,10 @@
+const express = require("express");
+const router = express.Router();
+router.use("/auth", require("./auth"));
+router.use(require("./catalog"));
+router.use(require("./cart"));
+router.use(require("./orders"));
+router.use(require("./reviews"));
+router.use(require("./stats"));
+router.use((req, res) => res.status(404).json({ success: false, message: "Không tìm thấy API.", error: { code: "NOT_FOUND" } }));
+module.exports = router;

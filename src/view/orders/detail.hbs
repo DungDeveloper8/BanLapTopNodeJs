@@ -1,0 +1,100 @@
+<section class="page-section order-detail-page">
+  <div class="page-header">
+    <div>
+      <a class="back-link" href="/orders/history">← Đơn hàng của tôi</a>
+      <h1>Đơn hàng #{{order.id}}</h1>
+      <p>Đặt ngày {{formatDate order.created_at}}</p>
+    </div>
+    <span class="status-pill status-pill-large {{orderStatusClass order.order_status}}">
+      {{orderStatus order.order_status}}
+    </span>
+  </div>
+
+  <div class="order-content-grid">
+    <div class="order-main-column">
+      <section class="section-card">
+        <div class="section-heading">
+          <h2>Sản phẩm đã đặt</h2>
+          <span class="muted">Giá tại thời điểm mua</span>
+        </div>
+
+        <div class="order-products">
+          {{#each order.items}}
+            <article class="order-product">
+              <div class="order-product-main">
+                {{#if product_image}}
+                  <img src="{{product_image}}" alt="{{product_name}}" loading="lazy">
+                {{else}}
+                  <span class="image-placeholder image-placeholder-small">Chưa có ảnh</span>
+                {{/if}}
+
+                <div class="order-product-info">
+                  <a class="item-name" href="/products/{{product_id}}">{{product_name}}</a>
+                  <p class="muted">{{formatCurrency product_price}} × {{quantity}}</p>
+                </div>
+
+                <strong class="order-product-total">{{formatCurrency subtotal}}</strong>
+              </div>
+
+              {{#if canReview}}
+                <form class="review-form form-stack" method="POST" action="/orders/{{../order.id}}/reviews/{{product_id}}">
+                  <input type="hidden" name="_csrf" value="{{../csrfToken}}">
+                  <h3>Đánh giá sản phẩm đã nhận</h3>
+                  <fieldset class="rating-fieldset">
+                    <legend>Chọn số sao</legend>
+                    <div class="rating-choices">
+                      <label><input type="radio" name="rating" value="1" required><span>★ <small>1</small></span></label>
+                      <label><input type="radio" name="rating" value="2"><span>★ <small>2</small></span></label>
+                      <label><input type="radio" name="rating" value="3"><span>★ <small>3</small></span></label>
+                      <label><input type="radio" name="rating" value="4"><span>★ <small>4</small></span></label>
+                      <label><input type="radio" name="rating" value="5"><span>★ <small>5</small></span></label>
+                    </div>
+                  </fieldset>
+                  <label>
+                    Lời nhắn đánh giá
+                    <textarea name="comment" rows="3" maxlength="1000" placeholder="Chia sẻ cảm nhận của bạn về sản phẩm..." required></textarea>
+                  </label>
+                  <div class="form-actions">
+                    <button class="btn btn-primary" type="submit">Gửi đánh giá</button>
+                  </div>
+                </form>
+              {{else}}
+                {{#if review}}
+                  <div class="review-existing">
+                    <strong>Đánh giá của bạn</strong>
+                    <span class="rating-stars" aria-label="{{review.rating}} trên 5 sao">{{review.stars}}<span class="rating-empty">{{review.emptyStars}}</span></span>
+                    <p>{{review.comment}}</p>
+                  </div>
+                {{/if}}
+              {{/if}}
+            </article>
+          {{/each}}
+        </div>
+      </section>
+    </div>
+
+    <aside class="section-card order-summary">
+      <h2>Thông tin đơn hàng</h2>
+      <dl class="info-list">
+        <div><dt>Trạng thái</dt><dd>{{orderStatus order.order_status}}</dd></div>
+        <div><dt>Người nhận</dt><dd>{{order.customer_name}}</dd></div>
+        <div><dt>Số điện thoại</dt><dd>{{order.phone}}</dd></div>
+        <div><dt>Địa chỉ</dt><dd>{{order.address}}</dd></div>
+        <div><dt>Thanh toán</dt><dd>Thanh toán khi nhận hàng (COD)</dd></div>
+      </dl>
+      <div class="summary-row summary-total">
+        <span>Tổng thanh toán</span>
+        <strong>{{formatCurrency order.total_price}}</strong>
+      </div>
+      {{#if delivered}}
+        <p class="help-text">Đơn đã giao thành công. Bạn có thể đánh giá các sản phẩm ở bên trái.</p>
+      {{/if}}
+      {{#if canCancel}}
+        <form method="POST" action="/orders/{{order.id}}/cancel" data-confirm="Bạn chắc chắn muốn hủy đơn hàng này?">
+          <input type="hidden" name="_csrf" value="{{csrfToken}}">
+          <button class="btn btn-danger btn-block" type="submit">Hủy đơn hàng</button>
+        </form>
+      {{/if}}
+    </aside>
+  </div>
+</section>

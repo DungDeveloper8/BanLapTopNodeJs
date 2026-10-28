@@ -1,0 +1,48 @@
+<section class="page-section">
+  <div class="page-header">
+    <div>
+      <h1>Đơn hàng của tôi</h1>
+      <p>Theo dõi quá trình xử lý và giao hàng.</p>
+    </div>
+    <a class="btn btn-outline" href="/">Tiếp tục mua sắm</a>
+  </div>
+
+  {{#if orders.length}}
+    <div class="table-card table-scroll">
+      <table class="orders-table">
+        <thead>
+          <tr>
+            <th>Mã đơn</th>
+            <th>Ngày đặt</th>
+            <th>Tổng tiền</th>
+            <th>Trạng thái</th>
+            <th>Thao tác</th>
+          </tr>
+        </thead>
+        <tbody>
+          {{#each orders}}
+            <tr>
+              <td><strong>#{{id}}</strong></td>
+              <td>{{formatDate created_at}}</td>
+              <td><strong>{{formatCurrency total_price}}</strong></td>
+              <td>
+                <span class="status-pill {{orderStatusClass order_status}}">
+                  {{orderStatus order_status}}
+                </span>
+              </td>
+              <td>
+                <a class="btn btn-outline btn-small" href="/orders/{{id}}">Xem chi tiết</a>
+              </td>
+            </tr>
+          {{/each}}
+        </tbody>
+      </table>
+    </div>
+  {{else}}
+    <div class="empty-box">
+      <h2>Chưa có đơn hàng</h2>
+      <p>Những sản phẩm bạn đã đặt mua sẽ xuất hiện tại đây.</p>
+      <a class="btn btn-primary" href="/">Xem sản phẩm</a>
+    </div>
+  {{/if}}
+</section>

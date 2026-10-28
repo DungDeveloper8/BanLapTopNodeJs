@@ -1,43 +1,45 @@
 <section class="admin-page">
   <div class="admin-title">
-    <div>
-      <h1>Thêm sản phẩm</h1>
-      <p>Nhập thông tin laptop mới.</p>
-    </div>
+    <div><h1>Thêm sản phẩm</h1><p>Nhập thông tin sản phẩm mới.</p></div>
     <a class="btn btn-outline" href="/admin/products">Quay lại</a>
   </div>
 
   <div class="form-card admin-form-card">
     {{#if error}}<div class="alert alert-danger">{{error}}</div>{{/if}}
-
     <form class="form-stack" action="/admin/products/create" method="POST">
+    <input type="hidden" name="_csrf" value="{{csrfToken}}">
       <div class="form-grid">
-        <label>
-          Tên laptop
+        <label>Tên sản phẩm
           <input type="text" name="name" value="{{form.name}}" maxlength="255" required>
         </label>
-
-        <label>
-          Hãng
+        <label>Hãng
           <input type="text" name="brand" value="{{form.brand}}" maxlength="100" required>
         </label>
-
-        <label>
-          Giá
-          <input type="number" name="price" value="{{form.price}}" min="0" step="1000" required>
+        <label>Loại sản phẩm
+          <select name="category" required>
+            <option value="Phụ kiện" {{#if form.isAccessory}}selected{{/if}}>Phụ kiện</option>
+            <option value="Điện thoại" {{#if form.isPhone}}selected{{/if}}>Điện thoại</option>
+          </select>
+        </label>
+        <label>Giá (VNĐ)
+          <input type="number" name="price" value="{{form.price}}" min="0" step="1" required>
+        </label>
+        <label>Tồn kho
+          <input type="number" name="stock" value="{{form.stock}}" min="0" step="1" required>
+        </label>
+        <label>RAM (GB; để trống nếu là phụ kiện)
+          <input type="number" name="ram_gb" value="{{form.ram_gb}}" min="1" step="1">
+        </label>
+        <label>Bộ nhớ (GB; để trống nếu là phụ kiện)
+          <input type="number" name="storage_gb" value="{{form.storage_gb}}" min="1" step="1">
         </label>
       </div>
-
-      <label>
-        Đường dẫn ảnh
-        <input type="text" name="image" value="{{form.image}}" maxlength="255" placeholder="/images/products/ten-anh.png">
+      <label>Đường dẫn ảnh
+        <input type="text" name="image" value="{{form.image}}" maxlength="2048" placeholder="https://... hoặc /images/products/ten-anh.png">
       </label>
-
-      <label>
-        Mô tả
+      <label>Mô tả
         <textarea name="description" rows="6">{{form.description}}</textarea>
       </label>
-
       <button class="btn btn-primary" type="submit">Lưu sản phẩm</button>
     </form>
   </div>

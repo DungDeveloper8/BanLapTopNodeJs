@@ -1,0 +1,5 @@
+<section class="admin-page">
+  <div class="admin-title"><h1>Thống kê bán hàng</h1></div>
+  <div class="summary-card"><p>Số đơn hoàn thành: <strong>{{completedOrders}}</strong></p><h2>Doanh thu: {{formatCurrency revenue}}</h2></div>
+  <h2>Sản phẩm bán chạy</h2><div class="table-card table-scroll"><table><thead><tr><th>Sản phẩm</th><th>Số lượng đã bán</th></tr></thead><tbody>{{#each top}}<tr><td>{{name}}</td><td>{{quantity}}</td></tr>{{else}}<tr><td colspan="2">Chưa có dữ liệu.</td></tr>{{/each}}</tbody></table></div>
+</section>

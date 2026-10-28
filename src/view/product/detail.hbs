@@ -1,34 +1,74 @@
-<section class="product-detail">
-  <div class="detail-image-box">
-    {{#if product.image}}
-      <img src="{{product.image}}" alt="{{product.name}}" />
-    {{else}}
-      <span class="image-placeholder image-placeholder-large">Chưa có ảnh</span>
-    {{/if}}
-  </div>
-
-  <div class="detail-info">
-    <a class="back-link" href="/">← Quay lại trang chủ</a>
-
-    <p class="product-brand">{{product.brand}}</p>
-    <h1>{{product.name}}</h1>
-    <p class="price price-large">{{formatCurrency product.price}}</p>
-
-    <div class="description-box">
-      <h2>Mô tả sản phẩm</h2>
-      <p>
-        {{#if product.description}}
-          {{product.description}}
-        {{else}}
-          Chưa có mô tả cho sản phẩm này.
-        {{/if}}
-      </p>
+<section class="page-section">
+  <div class="product-detail">
+    <div class="detail-image-box">
+      {{#if product.image}}
+        <img src="{{product.image}}" alt="{{product.name}}">
+      {{else}}
+        <span class="image-placeholder image-placeholder-large">Chưa có ảnh</span>
+      {{/if}}
     </div>
 
-    <form action="/cart/add/{{product.id}}" method="POST">
-      <button class="btn btn-primary btn-large" type="submit">
-        Thêm vào giỏ hàng
-      </button>
-    </form>
+    <div class="detail-info">
+      <a class="back-link" href="/">← Quay lại danh sách</a>
+      <p class="product-brand">{{product.brand}}</p>
+      <h1>{{product.name}}</h1>
+      <p class="price price-large">{{formatCurrency product.price}}</p>
+
+      <div class="description-box">
+        <h2>Cấu hình và thông tin</h2>
+        {{#if product.category}}<p><strong>Loại:</strong> {{product.category}}</p>{{/if}}
+        {{#if product.ram_gb}}<p><strong>RAM:</strong> {{product.ram_gb}} GB</p>{{/if}}
+        {{#if product.storage_gb}}<p><strong>Bộ nhớ:</strong> {{product.storage_gb}} GB</p>{{/if}}
+        <p><strong>Tồn kho:</strong> {{product.stock}}</p>
+      </div>
+
+      <div class="description-box">
+        <h2>Mô tả sản phẩm</h2>
+        <p>{{#if product.description}}{{product.description}}{{else}}Chưa có mô tả cho sản phẩm này.{{/if}}</p>
+      </div>
+
+      {{#if product.stock}}
+        <form method="POST" action="/cart/add/{{product.id}}">
+          <input type="hidden" name="_csrf" value="{{csrfToken}}">
+          <button class="btn btn-primary btn-large" type="submit">Thêm vào giỏ hàng</button>
+        </form>
+      {{else}}
+        <p class="product-sold-out">Sản phẩm hiện đã hết hàng.</p>
+      {{/if}}
+    </div>
   </div>
+
+  <section class="reviews-section section-card" id="danh-gia">
+    <div class="section-heading">
+      <div>
+        <h2>Đánh giá từ khách đã mua</h2>
+        <p class="muted">Chỉ những đơn đã giao thành công mới có thể đánh giá.</p>
+      </div>
+      {{#if ratingCount}}
+        <div class="rating-summary">
+          <strong class="rating-stars">★ {{ratingAverage}} / 5</strong>
+          <span class="muted">{{ratingCount}} đánh giá</span>
+        </div>
+      {{/if}}
+    </div>
+
+    {{#if reviews.length}}
+      <div class="reviews-list">
+        {{#each reviews}}
+          <article class="review-card">
+            <div class="review-card-header">
+              <div>
+                <strong>{{author}}</strong>
+                <span class="rating-stars" aria-label="{{rating}} trên 5 sao">{{stars}}<span class="rating-empty">{{emptyStars}}</span></span>
+              </div>
+              <time class="muted">{{formatDate created_at}}</time>
+            </div>
+            <p>{{comment}}</p>
+          </article>
+        {{/each}}
+      </div>
+    {{else}}
+      <p class="muted">Chưa có đánh giá nào cho sản phẩm này.</p>
+    {{/if}}
+  </section>
 </section>

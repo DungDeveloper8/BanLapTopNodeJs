@@ -39,6 +39,7 @@
                 <td>{{formatCurrency price}}</td>
                 <td>
                   <form class="quantity-form" action="/cart/update/{{id}}" method="POST">
+    <input type="hidden" name="_csrf" value="{{../csrfToken}}">
                     <input
                       type="number"
                       name="quantity"
@@ -58,6 +59,7 @@
                     method="POST"
                     data-confirm="Xóa sản phẩm này khỏi giỏ hàng?"
                   >
+    <input type="hidden" name="_csrf" value="{{../csrfToken}}">
                     <button class="btn btn-danger btn-small" type="submit">
                       Xóa
                     </button>

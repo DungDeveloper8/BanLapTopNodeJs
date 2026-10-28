@@ -1,0 +1,86 @@
+<section class="admin-page order-detail-page">
+  <div class="admin-title">
+    <div>
+      <h1>Đơn hàng #{{order.id}}</h1>
+      <p>Ngày đặt: {{formatDate order.created_at}}</p>
+    </div>
+    <a href="/admin/orders" class="btn btn-outline">Trở lại danh sách</a>
+  </div>
+
+  <div class="order-content-grid">
+    <section class="section-card">
+      <div class="section-heading">
+        <h2>Sản phẩm trong đơn</h2>
+        <span class="status-pill {{orderStatusClass order.order_status}}">
+          {{orderStatus order.order_status}}
+        </span>
+      </div>
+      <div class="table-scroll">
+        <table>
+          <thead>
+            <tr>
+              <th>Sản phẩm</th>
+              <th>Đơn giá</th>
+              <th>Số lượng</th>
+              <th>Thành tiền</th>
+            </tr>
+          </thead>
+          <tbody>
+            {{#each order.items}}
+              <tr>
+                <td><strong>{{product_name}}</strong></td>
+                <td>{{formatCurrency product_price}}</td>
+                <td>{{quantity}}</td>
+                <td>{{formatCurrency subtotal}}</td>
+              </tr>
+            {{/each}}
+          </tbody>
+        </table>
+      </div>
+      <div class="summary-row summary-total order-grand-total">
+        <span>Tổng đơn hàng</span>
+        <strong>{{formatCurrency order.total_price}}</strong>
+      </div>
+    </section>
+
+    <aside class="section-card order-summary">
+      <h2>Người nhận và giao hàng</h2>
+      <dl class="info-list">
+        <div><dt>Người nhận</dt><dd>{{order.customer_name}}</dd></div>
+        <div><dt>Điện thoại</dt><dd>{{order.phone}}</dd></div>
+        <div><dt>Địa chỉ</dt><dd>{{order.address}}</dd></div>
+        <div><dt>Thanh toán</dt><dd>{{order.payment_method}}</dd></div>
+      </dl>
+
+      <div class="order-actions">
+        {{#if canShip}}
+          <form method="POST" action="/admin/orders/{{order.id}}/status">
+            <input type="hidden" name="_csrf" value="{{csrfToken}}">
+            <input type="hidden" name="status" value="SHIPPING">
+            <button class="btn btn-primary btn-block" type="submit">Chuyển sang đang giao</button>
+          </form>
+        {{/if}}
+
+        {{#if canComplete}}
+          <form method="POST" action="/admin/orders/{{order.id}}/status" data-confirm="Xác nhận đơn hàng đã giao thành công?">
+            <input type="hidden" name="_csrf" value="{{csrfToken}}">
+            <input type="hidden" name="status" value="COMPLETED">
+            <button class="btn btn-primary btn-block" type="submit">Xác nhận giao thành công</button>
+          </form>
+        {{/if}}
+
+        {{#if canCancel}}
+          <form method="POST" action="/admin/orders/{{order.id}}/status" data-confirm="Hủy đơn hàng và hoàn tồn kho?">
+            <input type="hidden" name="_csrf" value="{{csrfToken}}">
+            <input type="hidden" name="status" value="CANCELLED">
+            <button class="btn btn-danger btn-block" type="submit">Hủy đơn hàng</button>
+          </form>
+        {{/if}}
+
+        {{#if canComplete}}
+          <p class="help-text">Chỉ xác nhận thành công sau khi khách đã nhận được hàng.</p>
+        {{/if}}
+      </div>
+    </aside>
+  </div>
+</section>

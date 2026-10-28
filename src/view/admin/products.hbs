@@ -2,7 +2,7 @@
   <div class="admin-title">
     <div>
       <h1>Quản lý sản phẩm</h1>
-      <p>Thêm, sửa và xóa laptop trong hệ thống.</p>
+      <p>Thêm, sửa và xóa sản phẩm trong hệ thống.</p>
     </div>
 
     <a class="btn btn-primary" href="/admin/products/create">
@@ -17,6 +17,9 @@
           <th>ID</th>
           <th>Sản phẩm</th>
           <th>Hãng</th>
+          <th>Loại</th>
+          <th>RAM / Bộ nhớ</th>
+          <th>Tồn kho</th>
           <th>Giá</th>
           <th>Thao tác</th>
         </tr>
@@ -36,6 +39,9 @@
               </div>
             </td>
             <td>{{brand}}</td>
+            <td>{{category}}</td>
+            <td>{{#if ram_gb}}{{ram_gb}}GB{{else}}—{{/if}} / {{#if storage_gb}}{{storage_gb}}GB{{else}}—{{/if}}</td>
+            <td>{{stock}}</td>
             <td>{{formatCurrency price}}</td>
             <td>
               <div class="action-group">
@@ -51,6 +57,7 @@
                   method="POST"
                   data-confirm="Xóa sản phẩm này?"
                 >
+    <input type="hidden" name="_csrf" value="{{../csrfToken}}">
                   <button class="btn btn-danger btn-small" type="submit">
                     Xóa
                   </button>
@@ -60,7 +67,7 @@
           </tr>
         {{else}}
           <tr>
-            <td class="table-empty" colspan="5">Chưa có sản phẩm.</td>
+            <td class="table-empty" colspan="8">Chưa có sản phẩm.</td>
           </tr>
         {{/each}}
       </tbody>

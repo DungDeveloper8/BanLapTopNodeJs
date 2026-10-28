@@ -12,7 +12,7 @@ async function remove(req, res, next) {
       return res.redirect("/admin/products");
     }
 
-    const result = await Product.delete(id);
+    const result = await Product.remove(id);
 
     if (!result.deletedCount) {
       req.session.flash = {

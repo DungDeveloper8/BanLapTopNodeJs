@@ -1,10 +1,27 @@
 <section class="page-section">
   <div class="page-header">
     <div>
-      <h1>Laptop Store</h1>
-      <p>Danh sách laptop hiện có tại cửa hàng.</p>
+      <h1>BK Mobile</h1>
+      <p>Điện thoại và phụ kiện hiện có tại cửa hàng.</p>
     </div>
   </div>
+
+  <form method="GET" action="/" class="form-card form-stack catalog-filters">
+    <div class="form-grid">
+      <label>Tìm sản phẩm<input type="search" name="q" value="{{filters.q}}" maxlength="100"></label>
+      <label>Hãng<select name="brand"><option value="">Tất cả hãng</option>{{#each filters.brands}}<option value="{{name}}" {{#if selected}}selected{{/if}}>{{name}}</option>{{/each}}</select></label>
+      <label>Loại<select name="category"><option value="">Tất cả</option><option value="Phụ kiện" {{#if filters.accessory}}selected{{/if}}>Phụ kiện</option><option value="Điện thoại" {{#if filters.phone}}selected{{/if}}>Điện thoại</option></select></label>
+      <label>Giá từ<input type="number" name="minPrice" min="0" value="{{filters.minPrice}}"></label>
+      <label>Đến giá<input type="number" name="maxPrice" min="0" value="{{filters.maxPrice}}"></label>
+      <label>RAM (GB)<input type="number" name="ram_gb" min="1" value="{{filters.ram_gb}}"></label>
+      <label>Bộ nhớ (GB)<input type="number" name="storage_gb" min="1" value="{{filters.storage_gb}}"></label>
+      <label>Sắp xếp<select name="sort"><option value="-created_at" {{#if filters.newFirst}}selected{{/if}}>Mới nhất</option><option value="price" {{#if filters.priceAsc}}selected{{/if}}>Giá tăng dần</option><option value="-price" {{#if filters.priceDesc}}selected{{/if}}>Giá giảm dần</option></select></label>
+    </div>
+    <div class="filter-actions">
+      <button type="submit" class="btn btn-primary">Áp dụng bộ lọc</button>
+      <a class="btn btn-outline" href="/">Xóa bộ lọc</a>
+    </div>
+  </form>
 
   {{#if products.length}}
     <div class="product-grid">
@@ -12,32 +29,31 @@
         <article class="product-card">
           <a class="product-image-box" href="/products/{{id}}">
             {{#if image}}
-              <img class="product-image" src="{{image}}" alt="{{name}}">
+              <img class="product-image" src="{{image}}" alt="{{name}}" loading="lazy">
             {{else}}
               <span class="image-placeholder">Chưa có ảnh</span>
             {{/if}}
           </a>
-
           <div class="product-card-body">
             <span class="product-brand">{{brand}}</span>
-            <h3>
-              <a href="/products/{{id}}">{{name}}</a>
-            </h3>
-
+            <h3><a href="/products/{{id}}">{{name}}</a></h3>
+            {{#if category}}<p class="product-spec">Loại: {{category}}</p>{{/if}}
+            {{#if ram_gb}}<p class="product-spec">RAM: {{ram_gb}} GB</p>{{/if}}
+            {{#if storage_gb}}<p class="product-spec">Bộ nhớ: {{storage_gb}} GB</p>{{/if}}
+            <p class="product-spec">Tồn kho: {{stock}}</p>
             <div class="product-meta">
               <p class="price">{{formatCurrency price}}</p>
             </div>
-
             <div class="card-actions">
-              <a class="btn btn-outline btn-small" href="/products/{{id}}">
-                Chi tiết
-              </a>
-
-              <form action="/cart/add/{{id}}" method="POST">
-                <button class="btn btn-primary btn-small" type="submit">
-                  Thêm giỏ
-                </button>
-              </form>
+              <a class="btn btn-outline btn-small" href="/products/{{id}}">Chi tiết</a>
+              {{#if stock}}
+                <form action="/cart/add/{{id}}" method="POST">
+    <input type="hidden" name="_csrf" value="{{../csrfToken}}">
+                  <button class="btn btn-primary btn-small" type="submit">Thêm giỏ</button>
+                </form>
+              {{else}}
+                <span class="product-sold-out">Hết hàng</span>
+              {{/if}}
             </div>
           </div>
         </article>
@@ -49,4 +65,9 @@
       <p>Quản trị viên có thể thêm sản phẩm trong trang quản trị.</p>
     </div>
   {{/if}}
+  <div class="action-group">
+    {{#if hasPrevious}}<a class="btn btn-outline btn-small" href="{{previousUrl}}">Trang trước</a>{{/if}}
+    <span>Trang {{pagination.page}} / {{pagination.totalPages}}</span>
+    {{#if hasNext}}<a class="btn btn-outline btn-small" href="{{nextUrl}}">Trang sau</a>{{/if}}
+  </div>
 </section>
